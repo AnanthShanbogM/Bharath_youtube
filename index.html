@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bharath YouTube</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script>
+        // Video Player Modal
+        const videoCards = document.querySelectorAll('.video-card');
+        const modal = document.getElementById('videoPlayerModal');
+        const videoPlayer = document.getElementById('videoPlayer');
+        const closeBtn = document.querySelector('.close');
+
+        videoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                modal.style.display = 'block';
+                // Add video source here (you would need to host actual video files)
+                videoPlayer.src = 'your-video-file.mp4';
+            });
+        });
+
+        closeBtn.onclick = () => {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = (event) => {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Like/Dislike functionality
+        const likeBtns = document.querySelectorAll('.like');
+        const dislikeBtns = document.querySelectorAll('.dislike');
+
+        likeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                if (btn.classList.contains('active')) {
+                    btn.style.color = '#FF0000';
+                } else {
+                    btn.style.color = '#333';
+                }
+            });
+        });
+
+        dislikeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                if (btn.classList.contains('active')) {
+                    btn.style.color = '#FF0000';
+                } else {
+                    btn.style.color = '#333';
+                }
+            });
+        });
+
+        // Share functionality
+        const shareBtns = document.querySelectorAll('.share');
+        shareBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Implement sharing logic here
+                alert('Share functionality coming soon!');
+            });
+        });
+
+        // Save functionality
+        const saveBtns = document.querySelectorAll('.save');
+        saveBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                if (btn.classList.contains('active')) {
+                    btn.style.color = '#FF0000';
+                    btn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                } else {
+                    btn.style.color = '#333';
+                    btn.innerHTML = '<i class="fas fa-save"></i> Save';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img src="https://img.icons8.com/ios-filled/50/000000/youtube-play.png" alt="Bharath YouTube">
+                <span>Bharath YouTube</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-icons">
+                <button class="upload-btn">Upload</button>
+                <div class="nav-items">
+                    <a href="#"><i class="fas fa-home"></i></a>
+                    <a href="#"><i class="fas fa-fire"></i></a>
+                    <a href="#"><i class="fas fa-play-circle"></i></a>
+                    <a href="#"><i class="fas fa-bell"></i></a>
+                    <a href="#"><i class="fas fa-user"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <aside class="sidebar">
+            <nav>
+                <a href="#" class="active">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-fire"></i>
+                    <span>Trending</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-play-circle"></i>
+                    <span>Subscriptions</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-play"></i>
+                    <span>Library</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-clock"></i>
+                    <span>Your Videos</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-heart"></i>
+                    <span>Liked Videos</span>
+                </a>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <div class="video-grid">
+                <!-- Video Cards -->
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/5mVQa8U0Q0Y/hqdefault.jpg" alt="Lord Shiva Aarti">
+                    <div class="video-info">
+                        <h3>Lord Shiva Aarti - Om Namah Shivaya</h3>
+                        <p>Devotional Music</p>
+                        <div class="video-stats">
+                            <span>1.5M views • 1 year ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/3VZkG9HdX1Y/hqdefault.jpg" alt="Sri Ganesh Aarti">
+                    <div class="video-info">
+                        <h3>Sri Ganesh Aarti - Vakratunda Mahakaya</h3>
+                        <p>Devotional Music</p>
+                        <div class="video-stats">
+                            <span>2M views • 2 years ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/7zZ5Q6dQ6sY/hqdefault.jpg" alt="Sri Krishna Bhajan">
+                    <div class="video-info">
+                        <h3>Sri Krishna Bhajan - Radhe Radhe Govinda</h3>
+                        <p>Spiritual Music</p>
+                        <div class="video-stats">
+                            <span>3.2M views • 3 months ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/8L5l5G1X0jY/hqdefault.jpg" alt="Sri Hanuman Chalisa">
+                    <div class="video-info">
+                        <h3>Sri Hanuman Chalisa - Full Aarti</h3>
+                        <p>Devotional Music</p>
+                        <div class="video-stats">
+                            <span>4.5M views • 6 months ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/9R5l5G1X0jY/hqdefault.jpg" alt="Sri Durga Aarti">
+                    <div class="video-info">
+                        <h3>Sri Durga Aarti - Jay Jagdamba</h3>
+                        <p>Devotional Music</p>
+                        <div class="video-stats">
+                            <span>2.8M views • 1 year ago</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <img src="https://img.youtube.com/vi/1L5l5G1X0jY/hqdefault.jpg" alt="Sri Ram Bhajan">
+                    <div class="video-info">
+                        <h3>Sri Ram Bhajan - Ram Ram Raghunath</h3>
+                        <p>Spiritual Music</p>
+                        <div class="video-stats">
+                            <span>3.5M views • 9 months ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Player Modal -->
+                <div id="videoPlayerModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <div class="video-player">
+                            <video id="videoPlayer" controls>
+                                <source src="" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <div class="video-actions">
+                                <button class="action-btn like"><i class="fas fa-thumbs-up"></i> Like</button>
+                                <button class="action-btn dislike"><i class="fas fa-thumbs-down"></i> Dislike</button>
+                                <button class="action-btn share"><i class="fas fa-share"></i> Share</button>
+                                <button class="action-btn save"><i class="fas fa-save"></i> Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Community</h3>
+                <ul>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Developers</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Legal</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Cookie Policy</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Bharath YouTube. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
