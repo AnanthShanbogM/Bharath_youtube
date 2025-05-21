@@ -6,11 +6,13 @@
     <title>Bharath YouTube</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vime@5.0.0/dist/vime.min.css">
+</head>
+<body>
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/vime@5.0.0/dist/vime.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vime@5.0.0/dist/vime.min.css"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
     <script>
         // Initialize video player
         const player = new Vime.Player({
@@ -35,6 +37,165 @@
 
         function closeModals() {
             const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+            });
+        }
+
+        window.onclick = (event) => {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        async function handleUpload(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const formData = new FormData(form);
+            
+            // Validate file size
+            const videoFile = document.getElementById('video').files[0];
+            if (videoFile.size > 10 * 1024 * 1024) { // 10MB
+                alert('File size exceeds 10MB limit');
+                return false;
+            }
+
+            // Simulate upload (replace with actual backend API)
+            try {
+                // Here you would typically send the form data to your server
+                // For now, we'll just show a success message
+                alert('Video uploaded successfully!');
+                closeModals();
+                form.reset();
+                
+                // Add the new video to the grid (replace with actual data from server)
+                const videoGrid = document.querySelector('.video-grid');
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <img src="${document.getElementById('thumbnail').files[0] ? URL.createObjectURL(document.getElementById('thumbnail').files[0]) : 'default-thumbnail.jpg'}" alt="${formData.get('title')}">
+                    <div class="video-info">
+                        <h3>${formData.get('title')}</h3>
+                        <p>${formData.get('description').substring(0, 100)}...</p>
+                        <div class="video-stats">
+                            <span>0 views • Just now</span>
+                        </div>
+                    </div>
+                `;
+                videoGrid.insertBefore(videoCard, videoGrid.firstChild);
+                
+            } catch (error) {
+                alert('Error uploading video: ' + error.message);
+            }
+            
+            return false;
+        }
+
+        // Add video cards
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add sample video cards (replace with actual data from server)
+            const videoGrid = document.querySelector('.video-grid');
+            const sampleVideos = [
+                {
+                    title: 'Welcome to Bharath YouTube',
+                    description: 'Introduction to our platform',
+                    thumbnail: 'https://img.icons8.com/ios-filled/50/000000/video.png',
+                    views: '100',
+                    time: 'Just now'
+                },
+                {
+                    title: 'How to Upload Videos',
+                    description: 'Step-by-step guide',
+                    thumbnail: 'https://img.icons8.com/ios-filled/50/000000/upload.png',
+                    views: '50',
+                    time: '1 hour ago'
+                }
+            ];
+
+            sampleVideos.forEach(video => {
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.innerHTML = `
+                    <img src="${video.thumbnail}" alt="${video.title}">
+                    <div class="video-info">
+                        <h3>${video.title}</h3>
+                        <p>${video.description}</p>
+                        <div class="video-stats">
+                            <span>${video.views} views • ${video.time}</span>
+                        </div>
+                    </div>
+                `;
+                videoGrid.appendChild(videoCard);
+            });
+        });
+
+        // Add interactive features
+        document.addEventListener('DOMContentLoaded', () => {
+            const videoCards = document.querySelectorAll('.video-card');
+            videoCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.style.transform = 'translateY(-5px)';
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'translateY(0)';
+                });
+
+                card.addEventListener('click', () => {
+                    // Implement video playback
+                    player.play();
+                });
+            });
+
+            // Like/Dislike functionality
+            const actionBtns = document.querySelectorAll('.action-btn');
+            actionBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.classList.toggle('active');
+                    if (btn.classList.contains('active')) {
+                        btn.style.color = 'var(--primary-color)';
+                    } else {
+                        btn.style.color = '#333';
+                    }
+                });
+            });
+
+            // Share functionality
+            const shareBtns = document.querySelectorAll('.share');
+            shareBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert('Link copied to clipboard!');
+                });
+            });
+
+            // Save functionality
+            const saveBtns = document.querySelectorAll('.save');
+            saveBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const savedVideos = JSON.parse(localStorage.getItem('savedVideos') || '[]');
+                    const videoId = btn.parentElement.parentElement.id;
+                    
+                    if (!savedVideos.includes(videoId)) {
+                        savedVideos.push(videoId);
+                        localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+                        btn.innerHTML = '<i class="fas fa-check"></i> Saved';
+                    } else {
+                        const index = savedVideos.indexOf(videoId);
+                        savedVideos.splice(index, 1);
+                        localStorage.setItem('savedVideos', JSON.stringify(savedVideos));
+                        btn.innerHTML = '<i class="fas fa-save"></i> Save';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>            const modals = document.querySelectorAll('.modal');
             modals.forEach(modal => {
                 modal.style.display = 'none';
             });
