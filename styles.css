@@ -1,11 +1,12 @@
 /* Global Styles */
 :root {
-    --primary-color: #FF0000;
+    --primary-color: #FFA500;
     --secondary-color: #000000;
     --background-color: #FFFFFF;
     --text-color: #333333;
-    --hover-color: #FF4444;
+    --hover-color: #FFB84D;
     --sidebar-width: 240px;
+    --accent-color: #0073E6;
 }
 
 * {
